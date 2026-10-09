@@ -1,0 +1,151 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #0b1b21;
+  --brand: #0d9488;
+  --brand-bright: #14b8a6;
+  --cyan-pop: #06b6d4;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sora), var(--font-cairo), ui-sans-serif, system-ui, sans-serif;
+  color: var(--ink);
+  background: #f4faf9;
+}
+
+html[lang="ar"] body {
+  font-family: var(--font-cairo), var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+}
+
+::selection {
+  background: #99f6e4;
+  color: #0f2e2b;
+}
+
+/* ---------- soft focus background ---------- */
+.bg-scene {
+  position: fixed;
+  inset: -4%;
+  z-index: -3;
+  background-image: url("/images/bg-clinic.jpg");
+  background-size: cover;
+  background-position: center;
+  filter: blur(18px) saturate(1.05) brightness(1.04);
+  transform: scale(1.06);
+}
+.bg-wash {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(60vw 45vh at 12% 8%, rgba(45, 212, 191, 0.22), transparent 60%),
+    radial-gradient(55vw 45vh at 88% 22%, rgba(56, 189, 248, 0.2), transparent 60%),
+    radial-gradient(70vw 60vh at 50% 110%, rgba(13, 148, 136, 0.16), transparent 65%),
+    linear-gradient(180deg, rgba(248, 253, 252, 0.82), rgba(240, 250, 249, 0.9));
+}
+.bg-grain {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E");
+}
+
+/* ---------- glass card ---------- */
+.glass {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(18px) saturate(1.3);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+}
+.glass-strong {
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+}
+
+/* ---------- marquee ---------- */
+@keyframes marquee-x {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee-x 30s linear infinite;
+  will-change: transform;
+}
+.marquee-mask {
+  mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+}
+
+/* ---------- floating deco ---------- */
+@keyframes floaty {
+  0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+  50% { transform: translateY(-14px) rotate(var(--rot, 0deg)); }
+}
+.floaty { animation: floaty 7s ease-in-out infinite; }
+
+@keyframes blob-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(40px, -30px) scale(1.12); }
+  66% { transform: translate(-30px, 25px) scale(0.94); }
+}
+.blob { animation: blob-drift 18s ease-in-out infinite; filter: blur(70px); }
+
+/* ---------- shine sweep (featured card & ctas) ---------- */
+.shine {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.shine::after {
+  content: "";
+  position: absolute;
+  inset: -60% auto -60% -30%;
+  width: 40%;
+  transform: rotate(18deg) translateX(-140%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  animation: shine-sweep 4.2s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes shine-sweep {
+  0%, 55% { transform: rotate(18deg) translateX(-160%); }
+  85%, 100% { transform: rotate(18deg) translateX(430%); }
+}
+
+/* ---------- text gradient ---------- */
+.text-grad {
+  background: linear-gradient(100deg, #0d9488 10%, #06b6d4 55%, #38bdf8 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---------- dotted ring (spinner) ---------- */
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+.spin-slow { animation: spin-slow 1s linear infinite; }
+
+/* ---------- pulse ring on save badge ---------- */
+@keyframes pop-ring {
+  0% { box-shadow: 0 0 0 0 rgba(13, 148, 136, 0.45); }
+  100% { box-shadow: 0 0 0 14px rgba(13, 148, 136, 0); }
+}
+.pop-ring { animation: pop-ring 1.8s ease-out infinite; }
+
+/* thin scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(13, 148, 136, 0.35) transparent;
+}
+
+/* remove number input spinners */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
